@@ -28,7 +28,7 @@ pipeline{
                        -H "Authorization: Bearer $TOKEN" \
                        -H "X-GitHub-Api-Version: 2022-11-28" \
                        https://api.github.com/repos/$OWNER/$REPO/releases \
-                       -d '{"tag_name":"v2.0.0","target_commitish":"master","name":"v2.0.0","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
+                       -d '{"tag_name":"v3.0.0","target_commitish":"master","name":"v3.0.0","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
                       '''
                 }        
             }
