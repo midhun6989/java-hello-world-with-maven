@@ -48,7 +48,7 @@ pipeline{
                        -H "Authorization: Bearer $TOKEN" \
                        -H "X-GitHub-Api-Version: 2022-11-28" \
                        -H "Content-Type: application/octet-stream" \
-                       "https://uploads.github.com/repos/$OWNER/$REPO/releases/$RELEASE_ID/assets?name=artifact.zip" \
+                       "https://uploads.github.com/repos/$OWNER/$REPO/releases/$RELEASE_ID/assets?name=jb-hello-world-maven-0.2.0.jar" \
                        --data-binary "@target/jb-hello-world-maven-0.2.0.jar"
                       '''
                 }        
