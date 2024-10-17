@@ -11,7 +11,7 @@ pipeline{
     }
     
     stages{
-        stage('maven build'){
+        stage('build'){
             steps{
                sh 'mvn package'
             }
@@ -21,8 +21,8 @@ pipeline{
             steps{
                 withCredentials([string(credentialsId: 'GH-Token', variable: 'TOKEN')]) {
                    sh '''#!/bin/bash
-                       DATA='{"tag_name":"v'$BUILD_NUMBER'","target_commitish":"'$BRANCH_NAME'","name":"v'$BUILD_NUMBER'","body":"JAR file of the application,"draft":false,"prerelease":false,"generate_release_notes":false}'
-                       
+                       DATA='{"tag_name":"v'$BUILD_NUMBER'","target_commitish":"'$BRANCH_NAME'","name":"v'$BUILD_NUMBER'","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
+                       echo Data = $DATA
                        curl -L \
                        -o release.json \
                        -X POST \
@@ -41,7 +41,6 @@ pipeline{
                 withCredentials([string(credentialsId: 'GH-Token', variable: 'TOKEN')]) {
                    sh '''#!/bin/bash
                        RELEASE_ID=$(jq '.id' release.json)
-                       
                        curl -L \
                        -X POST \
                        -H "Accept: application/vnd.github+json" \
