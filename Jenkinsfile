@@ -24,6 +24,7 @@ pipeline{
                 withCredentials([string(credentialsId: 'GH-Token', variable: 'TOKEN')]) {
                    sh '''#!/bin/bash
                        DATA='{"tag_name":"v5.0.0","target_commitish":"'$BRANCH_NAME'","name":"v5.0.0","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
+                       echo Data = $DATA
                        curl -L \
                        -o release.json \
                        -X POST \
