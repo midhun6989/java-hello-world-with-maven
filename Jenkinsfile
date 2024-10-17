@@ -14,8 +14,6 @@ pipeline{
         stage('build'){
             steps{
                sh 'mvn package'
-               sh "echo Build Number = $BUILD_NUMBER"
-               sh "echo Branch Name =  $BRANCH_NAME"
             }
         }
 
