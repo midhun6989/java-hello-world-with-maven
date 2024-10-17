@@ -29,7 +29,7 @@ pipeline{
                        -H "Authorization: Bearer $TOKEN" \
                        -H "X-GitHub-Api-Version: 2022-11-28" \
                        https://api.github.com/repos/$OWNER/$REPO/releases \
-                       -d '{"tag_name":"v$BUILD_NUMBER","target_commitish":"$BRANCH_NAME","name":"v$BUILD_NUMBER","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
+                       -d '{"tag_name":"$BUILD_NUMBER","target_commitish":"$BRANCH_NAME","name":"$BUILD_NUMBER","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
                       '''
                 }        
             }
