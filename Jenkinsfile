@@ -22,7 +22,7 @@ pipeline{
                 withCredentials([string(credentialsId: 'GH-Token', variable: 'TOKEN')]) {
                    sh '''#!/bin/bash
                        DATA='{"tag_name":"v'$BUILD_NUMBER'","target_commitish":"'$BRANCH_NAME'","name":"v'$BUILD_NUMBER'","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
-                       echo Data = $DATA
+
                        curl -L \
                        -o release.json \
                        -X POST \
@@ -40,15 +40,18 @@ pipeline{
             steps{
                 withCredentials([string(credentialsId: 'GH-Token', variable: 'TOKEN')]) {
                    sh '''#!/bin/bash
+                       cd target && zip artifact.zip jb-hello-world-maven-0.2.0.jar && cd ..
+                       
                        RELEASE_ID=$(jq '.id' release.json)
+                       
                        curl -L \
                        -X POST \
                        -H "Accept: application/vnd.github+json" \
                        -H "Authorization: Bearer $TOKEN" \
                        -H "X-GitHub-Api-Version: 2022-11-28" \
                        -H "Content-Type: application/octet-stream" \
-                       "https://uploads.github.com/repos/$OWNER/$REPO/releases/$RELEASE_ID/assets?name=jb-hello-world-maven-0.2.0.jar" \
-                       --data-binary "@target/jb-hello-world-maven-0.2.0.jar"
+                       "https://uploads.github.com/repos/$OWNER/$REPO/releases/$RELEASE_ID/assets?name=artifact.zip" \
+                       --data-binary "@target/artifact.zip"
                       '''
                 }        
             }
