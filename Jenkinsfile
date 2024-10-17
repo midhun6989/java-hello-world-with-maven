@@ -40,7 +40,9 @@ pipeline{
             steps{
                 withCredentials([string(credentialsId: 'GH-Token', variable: 'TOKEN')]) {
                    sh '''#!/bin/bash
-                       cd target && zip artifact.zip jb-hello-world-maven-0.2.0.jar && cd ..
+                       pushd target
+                       zip artifact.zip jb-hello-world-maven-0.2.0.jar
+                       popd
                        
                        RELEASE_ID=$(jq '.id' release.json)
                        
