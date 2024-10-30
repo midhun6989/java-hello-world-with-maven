@@ -24,14 +24,12 @@ pipeline{
                    sh '''#!/bin/bash
                        DATA='{"tag_name":"v'$BUILD_NUMBER'","target_commitish":"'$BRANCH_NAME'","name":"v'$BUILD_NUMBER'","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
 
-                       curl -L \
-                       -o release.json \
-                       -X POST \
+                       gh api \
+                       --method POST \
                        -H "Accept: application/vnd.github+json" \
-                       -H "Authorization: Bearer $TOKEN" \
                        -H "X-GitHub-Api-Version: 2022-11-28" \
-                       https://api.github.com/repos/$OWNER/$REPO/releases \
-                       -d "$DATA"
+                       /repos/$OWNER/$REPO/releases \
+                       -f "tag_name=v'$BUILD_NUMBER'" -f "target_commitish='$BRANCH_NAME'" -f "name=v'$BUILD_NUMBER'" -f "body=Description of the release" -F "draft=false" -F "prerelease=false" -F "generate_release_notes=false"
                       '''
                 }        
             }
